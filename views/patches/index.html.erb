@@ -1,0 +1,42 @@
+<h1>Patches</h1>
+
+ <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Comment</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>File</th>
+      <% if current_manager.present? %>
+       <th>Actions</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @patches.each do |patch| %>
+      <tr>
+        <td><%= patch.name %></td>
+        <td><%= patch.comment %></td>
+        <td><%= patch.date %></td>
+        <td><%= patch.status.capitalize %></td>
+        <td>
+          <% if patch.patch_file.attached? %>
+            <%= link_to 'Download Patch', rails_blob_path(patch.patch_file), class: 'btn btn-secondary' %>
+          <% else %>
+            No file uploaded
+          <% end %>
+        </td>
+         <% if current_manager.present? %>
+           <td>
+          <%= button_to "Delete", patch_path(patch), method: :delete, remote: true, data: { confirm: "Are you sure you want to delete this ticket?"}, class:"btn btn-danger" %>
+          <br>
+          <%= link_to "Approve", update_status_patch_path(patch, new_status: "approved"), method: :patch, class: "btn btn-success" %>
+          <%= link_to "Reject", update_status_patch_path(patch, new_status: "rejected"), method: :patch, class: "btn btn-danger" %>
+        </td>
+         <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "Back", :back %>

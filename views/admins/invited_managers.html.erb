@@ -1,0 +1,10 @@
+<!-- app/views/admins/invited_managers.html.erb -->
+<h1>Invited Managers</h1>
+<ul>
+  <% @managers.each do |manager| %>
+    <li>
+      <%= manager.name %> (<%= manager.email %>)
+      <%= link_to 'Delete', invited_manager_path(manager), method: :delete, data: { confirm: 'Are you sure you want to delete this manager invitation?' } %>
+    </li>
+  <% end %>
+</ul>

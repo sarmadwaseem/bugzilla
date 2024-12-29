@@ -1,0 +1,15 @@
+<h1>Add Project Manager</h1>
+
+<%= form_with(model: @project_manager, url: project_managers_path, method: :post) do |form| %>
+  <div>
+    <%= form.label :project_id, "Select Project" %>
+    <%= form.collection_select :project_id, Project.all, :id, :name, prompt: "Select a project" %>
+  </div>
+
+  <div>
+    <%= form.label :manager_id, "Select Manager" %>
+    <%= form.collection_select :manager_id, Manager.all, :id, :name, prompt: "Select a manager" %>
+  </div>
+
+  <%= form.submit "Add Project Manager" %>
+<% end %>

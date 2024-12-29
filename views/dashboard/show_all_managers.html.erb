@@ -1,0 +1,21 @@
+<!-- app/views/admins/all_managers.html.erb -->
+<h1>All Managers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <!-- Add more columns for manager attributes as needed -->
+    </tr>
+  </thead>
+  <tbody>
+    <% @managers.each do |manager| %>
+      <tr>
+        <td><%= manager.name %></td>
+        <td><%= manager.email %></td>
+        <!-- Add more columns for manager attributes as needed -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>

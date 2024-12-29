@@ -1,0 +1,59 @@
+<!-- app/views/tickets/index.html.erb -->
+
+<h1>All Tickets</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Severity</th>
+      <th>Priority</th>
+      <th>Date</th>
+      <% if current_manager.present?  %>
+        <th>Delete</th>
+        <th>Patch</th>
+      <% end  %>
+        <th>Detail</th>
+      <% if current_engineer.present? %>
+        <th>Patches</th>
+        <th>Update Status</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= ticket.name %></td>
+        <td><%= ticket.description %></td>
+        <td><%= ticket.status %></td>
+        <td><%= ticket.severity %></td>
+        <td><%= ticket.priority %></td>
+        <td><%= ticket.date%></td>
+
+        <% if current_manager %>
+          <td>
+            <%= button_to "Delete", ticket_path(ticket), method: :delete, remote: true, data: { confirm: "Are you sure you want to delete this ticket?"}, class:"btn btn-danger" %>
+          </td>
+          <td><%= link_to 'View Patch',ticket_patches_path(ticket), class: 'btn btn-primary' %></td>
+        <% elsif current_engineer %>
+          <td>
+            <%= link_to 'Create Patches', new_ticket_patch_path(ticket),class: 'btn btn-success' %><br><br>
+            <%= link_to 'View Patch', ticket_patches_path(ticket),class: 'btn btn-primary' %>
+          </td>
+        <% end %>
+        <td><%= link_to "Ticket Detail", ticket_path(ticket), class: "btn btn-primary" %></td>
+        <% if current_engineer.present? %>
+          <td>
+            <%= link_to "Solved", update_status_ticket_path(ticket, new_status: "solved"), method: :patch, class: "btn btn-success" %>
+            <br><br>
+            <%= link_to "Working", update_status_ticket_path(ticket, new_status: "working"), method: :patch, class: "btn btn-danger" %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Back", projects_path, class: "btn btn-secondary" %>

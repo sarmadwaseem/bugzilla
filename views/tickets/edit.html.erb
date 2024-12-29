@@ -1,0 +1,39 @@
+<h1>Edit Ticket</h1>
+
+<%= form_for(@ticket, url: project_ticket_path(@ticket), method: :patch) do |f| %>
+  <%= f.hidden_field :project_id, value: @project_id %>
+
+    <div class="mb-3">
+       <%= f.label :name %><br />
+       <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control" %>
+    </div>
+
+    <div class="mb-3">
+     <%= f.label :description %><br/>
+     <%= f.text_field :description, class:"form-control"  %>
+    </div>
+
+    <div class="mb-3">
+     <%= f.label :severity %><br/>
+     <%= f.text_field :severity, class:"form-control"  %>
+    </div>
+
+     <div class="mb-3">
+     <%= f.label :priority %><br/>
+     <%= f.text_field :priority, class:"form-control"  %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :date %>
+      <%= f.date_field :date %>
+    </div>
+
+
+    <div class="mb-3">
+      <%= f.label :engineer_id %><br/>
+      <%= f.collection_select :engineer_id, Engineer.all, :id, :name, prompt: true, class:"form-select form-select-lg mb-3" %>
+    </div>
+
+  <%= f.submit 'Update Ticket', class: "btn btn-success" %>
+<% end %>
+<%= link_to 'Back', ticket_path(@ticket) %>

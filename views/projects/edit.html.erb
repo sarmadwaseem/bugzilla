@@ -1,0 +1,78 @@
+<h1>Edit Project</h1>
+
+<!-- Assigned Managers -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Assigned Managers</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% if @managers.any? %>
+        <% @managers.each do |manager| %>
+        <td>Name: <%= manager.name %></td>
+          <td>
+            <%= form_for @project, url: unassign_manager_project_path(@project, manager_id: manager.id), method: :patch do |f| %>
+              <%= f.submit "Unassign", class: "btn btn-danger" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td><p>No Manager Assigned</p></td>
+        <td>
+          <%= form_for @project do |f| %>
+            <% Manager.all.each do |manager| %>
+              <label>
+                <%= check_box_tag "project[manager_ids][]", manager.id %>
+                <%= manager.name %>
+              </label><br>
+            <% end %>
+            <%= f.submit "Assign Managers", class: "btn btn-primary" %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- Assigned Engineers -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Assigned Engineers</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+     <% if @engineers.any? %>
+        <% @engineers.each do |engineer| %>
+        <tr>
+        <td>Name: <%= engineer.name %></td>
+          <td>
+            <%= form_for @project, url: unassign_engineer_project_path(@project, engineer_id: engineer.id), method: :patch do |f| %>
+              <%= f.submit "Unassign", class: "btn btn-danger" %>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      <% else %>
+       <td> No Engineer  assign</td>
+        <td>
+            <%= form_for @project, url: assign_engineer_project_path(@project), method: :patch do |f| %>
+            <% Engineer.all.each do |engineer| %>
+              <label>
+                <%= check_box_tag "project[engineer_ids][]", engineer.id %>
+                <%= engineer.name %>
+              </label><br>
+            <% end %>
+             <%= f.submit "Assign Managers", class: "btn btn-primary" %>
+          <% end %>
+        </td>
+      <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Back", projects_path, class: "btn btn-secondary" %>

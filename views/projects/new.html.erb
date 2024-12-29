@@ -1,0 +1,56 @@
+<% if @project.errors.any? %>
+  <div class="alert alert-danger">
+    <% @project.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+<% end %>
+
+
+
+<h2>Create the Projects</h2>
+<%= form_for(@project, url: projects_path) do |f| %>
+
+    <div class="mb-3">
+       <%= f.label :name %><br />
+       <%= f.text_field :name, autofocus: true, autocomplete: "name", class:"form-control" %>
+    </div>
+
+    <div class="mb-3">
+     <%= f.label :description %><br/>
+     <%= f.text_field :description, class:"form-control"  %>
+    </div>
+
+
+
+    <%= f.fields_for :manager_ids do |managers_form| %>
+     <tr>
+        <td>
+          <%= managers_form.collection_select :id, Manager.all, :id, :name %>
+        </td>
+      </tr>
+    <% end %>
+    <br>  <br>
+
+    <%= f.fields_for :engineer_ids do |engineers_form| %>
+     <tr>
+        <td>
+          <%= engineers_form.collection_select :id, Engineer.all, :id, :name %>
+        </td>
+      </tr>
+    <% end %>
+
+    <br>
+     <br>
+  <div>
+   <%= f.submit "Create", class:"btn btn-primary"%>
+  </div>
+  <br>
+  <div>
+   <%= link_to "View All Projects", projects_path, class: "btn btn-primary" %>
+  </div>
+
+<% end %>
+<br>
+<%= link_to "Back to Dashboard", dashboard_path, class: "btn btn-secondary" %>
+

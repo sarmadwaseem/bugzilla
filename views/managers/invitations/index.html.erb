@@ -1,0 +1,29 @@
+<% if @managers.any? %>
+  <h1>All Managers</h1>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @managers.each do |manager| %>
+        <tr>
+          <td><%= manager.name %></td>
+          <td><%= manager.email %></td>
+          <td>
+          <% if manager.discarded? %>
+            <%= button_to "Undiscard", admins_invited_manager_path(manager), method: :patch, class: "btn btn-dark" %>
+           <% else %>
+            <%= button_to "Delete Account", admins_invited_manager_path(manager),method: :delete, data: { confirm: "Are you sure you want to delete this invited manager?" },class: "btn btn-danger" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No managers found.</p>
+<% end %>

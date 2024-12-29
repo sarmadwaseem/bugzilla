@@ -1,0 +1,30 @@
+<!-- app/views/tickets/show.html.erb -->
+<h1>Ticket Details</h1>
+
+<p><strong>Name:</strong> <%= @ticket.name %></p>
+<p><strong>Description:</strong> <%= @ticket.description %></p>
+<p><strong>Status:</strong> <%= @ticket.status %></p>
+<p><strong>Severity:</strong> <%= @ticket.severity %></p>
+<p><strong>Priority:</strong> <%= @ticket.priority %></p>
+<p><strong>Project:</strong> <%= @ticket.project.name %></p>
+<p><strong>Date:</strong> <%= @ticket.date %></p>
+<% if @ticket.engineer.present? %>
+  <p><strong>Engineer:</strong> <%= @ticket.engineer.name %></p>
+<% else %>
+  <p><strong>Engineer:</strong> No engineer assigned</p>
+<% end %>
+
+<% if current_manager %>
+  <%= link_to 'Edit', edit_project_ticket_path(@ticket.project, @ticket), class: 'btn btn-primary' %>
+<% elsif current_engineer %>
+  <%= link_to 'Back', project_tickets_path, class: 'btn btn-primary' %>
+<% end %>
+
+<br><br>
+
+<p> <strong> Comment: </strong>  </p>
+
+
+<%= render @ticket.comments %>
+
+<%= render 'comments/form' %>

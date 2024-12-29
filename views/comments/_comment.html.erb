@@ -1,0 +1,16 @@
+<article>
+ <p><%= comment.description %></p>
+
+  <% if comment.engineer_id.present? %>
+    <small>by Engineer <%= comment.engineer.name %></small>
+  <% elsif comment.manager_id.present? %>
+    <small>by Manager <%= comment.manager.name %></small>
+  <% else %>
+    <small>by Unknown</small>
+  <% end %>
+  <% if (current_manager && comment.manager_id == current_manager.id) || (current_engineer && comment.engineer_id == current_engineer.id) %><br>
+    <%= button_to 'Delete', ticket_comment_path(comment.ticket, comment), remote: true, method: :delete, class: "btn btn-danger" %><br>
+    <%= link_to "Update", edit_ticket_comment_path(comment.ticket, comment) %>
+  <% end %>
+<hr/>
+</article>

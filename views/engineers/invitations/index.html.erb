@@ -1,0 +1,29 @@
+<% if @engineers %>
+  <h1>All Engineers</h1>
+  <table class='table' >
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @engineers.each do |engineer| %>
+        <tr>
+          <td><%= engineer.name %></td>
+          <td><%= engineer.email %></td>
+          <td>
+              <% if engineer.discarded? %>
+            <%= button_to "Undiscard", admins_invited_engineer_path(engineer), method: :patch, class: "btn btn-dark" %>
+           <% else %>
+            <%= button_to "Delete Account", admins_invited_engineer_path(engineer),method: :delete, data: { confirm: "Are you sure you want to delete this invited manager?" },class: "btn btn-danger" %>
+            <% end %>
+          </td>
+    </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No engineer found.</p>
+<% end %>

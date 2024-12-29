@@ -1,0 +1,15 @@
+<h2> Admin DASHBOARD</h2>
+
+
+<a class="btn btn-primary" href="managers/invitation/new" role="button">CREATE MANAGERS</a>
+<a class="btn btn-primary" href="/engineers/invitation/new" role="button">CREATE ENGINEERS</a>
+<a class="btn btn-primary" href="/projects/new" role="button">CREATE PROJETCS</a>
+
+
+
+
+<br> <br>
+
+<% if current_admin %>
+  <%= button_to :logout, destroy_admin_session_url, method: :delete, class: "btn btn-danger" %>
+<% end %>
